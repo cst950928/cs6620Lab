@@ -1,0 +1,37 @@
+version: "2"
+services:
+    client:
+        image: cst950928/practical-website-client:v1
+        stdin_open: true
+        restart: always
+        ports:
+            - "3000:3000"
+        links:
+            - server
+        networks:
+            - webappnetwork
+    server:
+        image: cst950928/practical-website-server:v1
+        restart: always
+        ports:
+            - "8000:8000"
+        depends_on:
+            - mongo
+        networks:
+            - webappnetwork
+    mongo:
+        image: mongo:3.6.19-xenial
+        restart: always
+        ports:
+            - 27017:27017
+        command: mongod --noauth --smallfiles
+        volumes:
+            - mongo-data:/data/db
+        networks:
+            - webappnetwork
+networks:
+    webappnetwork:
+        driver: bridge
+volumes:
+  mongo-data:
+    driver: local

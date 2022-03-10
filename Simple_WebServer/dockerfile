@@ -8,7 +8,7 @@ RUN apt-get install apache2 -y
 RUN apt-get install apache2-utils -y
 RUN apt-get clean
 #copy customized index.html from local machine
-COPY index.html /var/www/html
+COPY . /var/www/html/
 #set ServerName localhost to specify the rendering address
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN service apache2 restart
